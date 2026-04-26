@@ -1,4 +1,4 @@
-/* latin-ext */
+/* Google Fonts - Lato (same as sheng-qiang template) */
 @font-face {
   font-family: 'Lato';
   font-style: italic;
@@ -6,7 +6,7 @@
   src: local('Lato Italic'), local('Lato-Italic'), url(https://fonts.gstatic.com/s/lato/v15/S6u8w4BMUTPHjxsAUi-qNiXg7eU0.woff2) format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-/* latin */
+
 @font-face {
   font-family: 'Lato';
   font-style: italic;
@@ -14,7 +14,7 @@
   src: local('Lato Italic'), local('Lato-Italic'), url(https://fonts.gstatic.com/s/lato/v15/S6u8w4BMUTPHjxsAXC-qNiXg7Q.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-/* latin-ext */
+
 @font-face {
   font-family: 'Lato';
   font-style: italic;
@@ -22,7 +22,7 @@
   src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v15/S6u_w4BMUTPHjxsI5wq_FQftx9897sxZ.woff2) format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-/* latin */
+
 @font-face {
   font-family: 'Lato';
   font-style: italic;
@@ -30,7 +30,7 @@
   src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v15/S6u_w4BMUTPHjxsI5wq_Gwftx9897g.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-/* latin-ext */
+
 @font-face {
   font-family: 'Lato';
   font-style: normal;
@@ -38,7 +38,7 @@
   src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v15/S6uyw4BMUTPHjxAwXiWtFCfQ7A.woff2) format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-/* latin */
+
 @font-face {
   font-family: 'Lato';
   font-style: normal;
@@ -46,7 +46,7 @@
   src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v15/S6uyw4BMUTPHjx4wXiWtFCc.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-/* latin-ext */
+
 @font-face {
   font-family: 'Lato';
   font-style: normal;
@@ -54,7 +54,7 @@
   src: local('Lato Bold'), local('Lato-Bold'), url(https://fonts.gstatic.com/s/lato/v15/S6u9w4BMUTPHh6UVSwaPGQ3q5d0N7w.woff2) format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-/* latin */
+
 @font-face {
   font-family: 'Lato';
   font-style: normal;
@@ -63,14 +63,25 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* ===== Color Theme: Pine Green (松林绿) ===== */
+:root {
+  --accent-color: #4a7c59;
+  --accent-hover: #3a6147;
+  --link-color: #2b4c7e;
+  --text-color: #333;
+  --text-light: #555;
+}
+
+/* ===== Base Styles ===== */
 a {
-  color: #1772d0;
+  color: var(--link-color);
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 a:focus,
 a:hover {
-  color: #f09228;
+  color: #1a3a5c;
   text-decoration: none;
 }
 
@@ -78,37 +89,113 @@ body,
 td,
 th,
 tr,
-p,
-a {
+p {
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-color);
 }
 
 strong {
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: inherit;
 }
 
+/* ===== Section Headings ===== */
 h2 {
   margin: 0;
-  font-weight: normal;
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 22px;
-}
-
-.papertitle {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 14px;
   font-weight: 700;
+  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 26px;
+  color: var(--accent-color);
+  border-bottom: 2px solid #e8f0e8;
+  padding-bottom: 6px;
 }
 
+/* ===== Name ===== */
 .name {
   padding-top: 20px;
   margin: 0;
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 32px;
+  font-size: 2.0rem;
+  font-weight: 400;
+  color: var(--text-color);
 }
 
+/* ===== Paper Title ===== */
+.papertitle {
+  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+/* ===== Underline ===== */
+.underline {
+  text-decoration: underline;
+}
+
+/* ===== Paper Image Border ===== */
+.paper-img {
+  border: 1px solid #2b4c7e;
+  border-radius: 8px;
+}
+
+/* ===== Conference Tag Badge ===== */
+span.tag {
+  color: #FFFFFF;
+  background-color: #2b4c7e;
+  padding: 1px 6px 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  vertical-align: middle;
+  margin-right: 4px;
+  display: inline-block;
+}
+
+/* ===== Author Links (dark text, hover to color) ===== */
+a.author {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+a.author:hover {
+  color: var(--link-color);
+}
+
+/* ===== Dark Links (for non-author text that should be dark) ===== */
+a.dark-link {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+a.dark-link:hover {
+  color: var(--link-color);
+}
+
+/* ===== TL;DR Summary ===== */
+span.tldr {
+  color: #555;
+  display: block;
+  margin-top: 4px;
+  font-size: 0.9rem;
+}
+
+/* ===== Location Badge ===== */
+.location {
+  font-size: 14px;
+  color: var(--text-light);
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* ===== Contact Info ===== */
+.contact-info {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+/* ===== Image Containers ===== */
 .one {
   width: 160px;
   height: 160px;
@@ -135,8 +222,8 @@ span.highlight {
 }
 
 .colored-box {
-    color: black;
-    padding: 20px;
-    display: inline-block;
-    border-radius: 10px;
+  color: black;
+  padding: 20px;
+  display: inline-block;
+  border-radius: 10px;
 }
