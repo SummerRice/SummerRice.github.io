@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LaaB – Logical Consistency as a Bridge</title>
+  <meta name="description" content="Project page for LaaB: Improving LLM Hallucination Detection via Label Constraint Modeling between Responses and Self-Judgments. ACL 2026 Main Conference.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌉</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<header class="hero">
+  <div class="container">
+    <span class="venue-badge">ACL 2026 Main Conference</span>
+    <h1><em>Logical Consistency as a Bridge:</em> Improving LLM Hallucination Detection via Label Constraint Modeling between Responses and Self-Judgments</h1>
+
+    <p class="authors">
+      <a href="https://summerrice.github.io/"><strong>Hao Mi</strong></a>,
+      <a href="https://sheng-qiang.github.io/" class="corresponding">Qiang Sheng</a>,
+      <span>Shaofei Wang</span>,
+      <a href="https://beanandrew.github.io/">Beizhe Hu</a>,
+      <a href="https://scholar.google.com/citations?user=sv7uxi4AAAAJ">Yifan Sun</a>,
+      <a href="https://zhengjiawa.github.io/">Zhengjia Wang</a>,
+      <span>Hengqi Zeng</span>,
+      <a href="https://liesy.github.io/">Yang Li</a>,
+      <a href="https://scholar.google.com/citations?user=hGZwK0cAAAAJ">Danding Wang</a>,
+      <a href="https://scholar.google.com/citations?user=fSBdNg0AAAAJ">Juan Cao</a>
+    </p>
+    <p class="affiliation">Institute of Computing Technology, Chinese Academy of Sciences &nbsp;·&nbsp; University of Chinese Academy of Sciences</p>
+
+    <div class="btn-row">
+      <a class="btn" href="#">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 2l5 5h-5V4zm-3 9h4v2h-4v-2zm0 3h4v2h-4v-2zm-2-3h1v2H8v-2zm0 3h1v2H8v-2z"/></svg>
+        Paper (TBA)
+      </a>
+      <a class="btn" href="https://github.com/ICTMCG/LaaB" target="_blank">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- ==================== TL;DR ==================== -->
+<section>
+  <h2>TL;DR</h2>
+  <div class="tldr-box">
+    Existing hallucination detectors either extract <strong>micro-level intrinsic patterns</strong> (hidden states, logits, attention) or elicit <strong>macro-level self-judgments</strong> — but treat these two inherently coupled signals in isolation. <strong>LaaB</strong> bridges both views by treating the LLM's self-judgment as another response subject to hallucination, and exploiting the <strong>logical constraint</strong> between response and judgment labels via mutual learning for more accurate detection.
+  </div>
+
+  <div class="fig-wrap">
+    <img src="static/motivation.png" alt="Motivation" style="max-width:520px">
+    <p class="fig-caption">Comparison of existing detection paradigms (a–b) and LaaB (c). Unlike methods that rely solely on intrinsic patterns or symbolic judgments, LaaB bridges both views via logic-constrained mutual learning.</p>
+  </div>
+</section>
+
+<!-- ==================== CONTRIBUTIONS ==================== -->
+<section>
+  <h2>Contributions</h2>
+  <ul class="contrib-list">
+    <li><strong>Concept:</strong> We propose to view the LLM's self-judgment as a special response that can itself be checked for hallucination, whose result bridges a logical constraint enabling integration of dual-view predictions.</li>
+    <li><strong>Method:</strong> We design LaaB, which bridges prediction signals from both intrinsic patterns and self-judgments, and builds a mutual learning framework for accurate hallucination detection.</li>
+    <li><strong>Performance:</strong> Experiments on 4 datasets, across 4 LLMs, against 8 baselines show LaaB effectively enhances hallucination detection without significant additional inference cost.</li>
+  </ul>
+</section>
+
+<!-- ==================== METHOD ==================== -->
+<section>
+  <h2>Method</h2>
+  <div class="fig-wrap">
+    <img src="static/method.png" alt="LaaB Framework">
+    <p class="fig-caption">Overall architecture of LaaB. (a) Response Hallucination Modeling extracts intrinsic features from the response generation. (b) Self-Judgment Hallucination Modeling introduces a meta-judgment process on the verbal judgment. (c) Logic-Constrained Mutual Learning bridges both views via logical consistency.</p>
+  </div>
+
+  <div class="method-steps">
+    <div class="step">
+      <div class="step-title">(a) Response Hallucination Modeling</div>
+      Detector D<sub>r</sub> classifies response factuality using intrinsic features (hidden states, logits, or attention scores) extracted during response generation.
+    </div>
+    <div class="step">
+      <div class="step-title">(b) Self-Judgment Hallucination Modeling</div>
+      We treat the LLM's self-judgment ("Yes"/"No") as a generated artifact subject to <em>evaluative hallucination</em>. Detector D<sub>j</sub> predicts its factuality via the same intrinsic features — a <strong>meta-judgment</strong>.
+    </div>
+    <div class="step">
+      <div class="step-title">(c) Logic-Constrained Mutual Learning</div>
+      The inherent logical dependency — if the judgment is "Yes", labels agree (L<sub>r</sub> = L<sub>j</sub>); if "No", they oppose (L<sub>r</sub> = 1 − L<sub>j</sub>) — is enforced via Huber loss with confidence-aware weighting. A two-stage strategy first trains D<sub>r</sub> and D<sub>j</sub> asynchronously, then jointly fine-tunes them. At inference, <strong>only D<sub>r</sub> is deployed</strong>.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== RESULTS ==================== -->
+<section>
+  <h2>Main Results</h2>
+  <p style="font-size:15px;margin-bottom:12px">Performance comparison on <strong>4 benchmarks × 4 LLMs × 8 baselines</strong>. Blue rows indicate LaaB-enhanced versions. <strong>Bold</strong> = LaaB outperforms its base. <u>Underlined</u> = best in the LLM group.</p>
+
+  <div class="results-scroll">
+    <table class="results">
+      <thead>
+        <tr>
+          <th rowspan="2">LLM</th><th rowspan="2">Method</th>
+          <th colspan="2">TriviaQA</th><th colspan="2">MMLU</th><th colspan="2">NQ_Open</th><th colspan="2">HaluEval</th><th colspan="2">Average</th>
+        </tr>
+        <tr><th>macF1</th><th>Acc</th><th>macF1</th><th>Acc</th><th>macF1</th><th>Acc</th><th>macF1</th><th>Acc</th><th>macF1</th><th>Acc</th></tr>
+      </thead>
+      <tbody>
+        <!-- Llama-8B -->
+        <tr><td rowspan="6"><strong>Llama-3.1-8B</strong></td><td>SAPLMA</td><td>77.05</td><td>79.87</td><td>69.96</td><td>70.75</td><td>73.01</td><td>75.15</td><td>75.70</td><td>75.88</td><td>73.93</td><td>75.41</td></tr>
+        <tr class="laab-row"><td>&nbsp;&nbsp;<em>+LaaB</em></td><td class="bold underline">78.74</td><td class="bold underline">82.09</td><td class="bold">71.77</td><td class="bold">73.25</td><td class="bold underline">73.10</td><td class="bold underline">77.13</td><td class="bold underline">77.20</td><td class="bold underline">77.60</td><td class="bold underline">75.20</td><td class="bold underline">77.52</td></tr>
+        <tr><td>Logits Lens</td><td>72.50</td><td>74.81</td><td>65.27</td><td>66.07</td><td>62.63</td><td>63.26</td><td>72.21</td><td>72.48</td><td>68.15</td><td>69.16</td></tr>
+        <tr class="laab-row"><td>&nbsp;&nbsp;<em>+LaaB</em></td><td class="bold">75.11</td><td class="bold">78.88</td><td class="bold">66.72</td><td class="bold">70.65</td><td class="bold">65.72</td><td class="bold">68.90</td><td class="bold">72.29</td><td class="bold">73.04</td><td class="bold">69.96</td><td class="bold">72.87</td></tr>
+        <tr><td>Lookback Lens</td><td>71.65</td><td>74.45</td><td class="underline">72.74</td><td class="underline">73.96</td><td>68.60</td><td>70.88</td><td>75.13</td><td>75.49</td><td>72.03</td><td>73.70</td></tr>
+        <tr class="laab-row"><td>&nbsp;&nbsp;<em>+LaaB</em></td><td class="bold">73.58</td><td class="bold">77.44</td><td>70.96</td><td>72.50</td><td class="bold">72.63</td><td class="bold">75.46</td><td class="bold">77.00</td><td class="bold">77.54</td><td class="bold">73.54</td><td class="bold">75.74</td></tr>
+        <!-- Llama-70B -->
+        <tr><td rowspan="6"><strong>Llama-3.1-70B</strong></td><td>SAPLMA</td><td>71.12</td><td>83.13</td><td>71.19</td><td>79.62</td><td>71.64</td><td class="underline">78.62</td><td>77.17</td><td>77.22</td><td>72.78</td><td>79.65</td></tr>
+        <tr class="laab-row"><td>&nbsp;&nbsp;<em>+LaaB</em></td><td class="bold underline">73.20</td><td class="bold underline">86.22</td><td class="bold underline">71.40</td><td class="bold underline">81.75</td><td class="bold underline">71.71</td><td>78.48</td><td class="bold underline">79.15</td><td class="bold underline">79.44</td><td class="bold underline">73.87</td><td class="bold underline">81.47</td></tr>
+        <tr><td>Logits Lens</td><td>65.67</td><td>76.55</td><td>62.42</td><td>70.63</td><td>54.50</td><td>60.03</td><td>72.33</td><td>72.52</td><td>63.73</td><td>69.93</td></tr>
+        <tr class="laab-row"><td>&nbsp;&nbsp;<em>+LaaB</em></td><td class="bold">70.23</td><td class="bold">84.19</td><td>60.18</td><td class="bold">72.33</td><td class="bold">57.21</td><td class="bold">71.74</td><td>72.07</td><td>72.36</td><td class="bold">64.92</td><td class="bold">75.16</td></tr>
+        <tr><td>Lookback Lens</td><td>69.97</td><td>79.53</td><td>68.95</td><td>75.07</td><td>64.30</td><td>68.67</td><td>78.31</td><td>78.54</td><td>70.38</td><td>75.45</td></tr>
+        <tr class="laab-row"><td>&nbsp;&nbsp;<em>+LaaB</em></td><td class="bold">72.45</td><td class="bold">85.11</td><td class="bold">69.73</td><td class="bold">79.62</td><td class="bold">66.65</td><td class="bold">76.28</td><td class="bold">78.73</td><td class="bold">78.91</td><td class="bold">71.89</td><td class="bold">79.98</td></tr>
+        <!-- Qwen -->
+        <tr><td rowspan="6"><strong>Qwen-2.5-32B</strong></td><td>SAPLMA</td><td>76.73</td><td>80.09</td><td>69.38</td><td>78.38</td><td>76.81</td><td>77.55</td><td>76.65</td><td>76.76</td><td>74.89</td><td>78.20</td></tr>
+        <tr class="laab-row"><td>&nbsp;&nbsp;<em>+LaaB</em></td><td class="bold underline">79.42</td><td class="bold underline">83.85</td><td class="bold">69.60</td><td class="bold">78.99</td><td class="bold underline">79.35</td><td class="bold underline">80.65</td><td class="bold">77.17</td><td class="bold">77.19</td><td class="bold underline">76.39</td><td class="bold underline">80.17</td></tr>
+        <tr><td>Logits Lens</td><td>68.15</td><td>72.74</td><td>53.19</td><td>63.17</td><td>65.02</td><td>66.03</td><td>72.56</td><td>72.62</td><td>64.73</td><td>68.64</td></tr>
+        <tr class="laab-row"><td>&nbsp;&nbsp;<em>+LaaB</em></td><td class="bold">70.90</td><td class="bold">77.06</td><td class="bold">54.62</td><td class="bold">74.36</td><td class="bold">67.21</td><td class="bold">70.61</td><td class="bold">73.80</td><td class="bold">73.91</td><td class="bold">66.63</td><td class="bold">73.99</td></tr>
+        <tr><td>Lookback Lens</td><td>76.59</td><td>79.99</td><td>68.14</td><td>75.07</td><td>76.62</td><td>77.99</td><td class="underline">78.46</td><td class="underline">78.48</td><td>74.95</td><td>77.88</td></tr>
+        <tr class="laab-row"><td>&nbsp;&nbsp;<em>+LaaB</em></td><td class="bold">77.66</td><td class="bold">82.36</td><td class="bold underline">70.29</td><td class="bold underline">79.79</td><td class="bold">78.08</td><td class="bold">79.32</td><td>78.16</td><td>78.21</td><td class="bold">76.05</td><td class="bold">79.92</td></tr>
+        <!-- Mistral -->
+        <tr><td rowspan="6"><strong>Mistral-7B</strong></td><td>SAPLMA</td><td>76.72</td><td>79.02</td><td>70.89</td><td>71.36</td><td>72.96</td><td>74.36</td><td>74.87</td><td>75.00</td><td>73.86</td><td>74.94</td></tr>
+        <tr class="laab-row"><td>&nbsp;&nbsp;<em>+LaaB</em></td><td class="bold underline">77.69</td><td class="bold underline">80.40</td><td class="bold">70.99</td><td>71.26</td><td class="bold underline">74.48</td><td class="bold underline">75.11</td><td class="bold underline">76.04</td><td class="bold underline">76.46</td><td class="bold underline">74.80</td><td class="bold underline">75.81</td></tr>
+        <tr><td>Logits Lens</td><td>68.72</td><td>72.52</td><td>59.56</td><td>60.26</td><td>58.94</td><td>62.82</td><td>68.53</td><td>68.87</td><td>63.94</td><td>66.12</td></tr>
+        <tr class="laab-row"><td>&nbsp;&nbsp;<em>+LaaB</em></td><td>67.73</td><td class="bold">73.54</td><td class="bold">60.98</td><td class="bold">62.91</td><td>58.94</td><td>62.07</td><td>68.26</td><td>68.66</td><td class="bold">63.98</td><td class="bold">66.80</td></tr>
+        <tr><td>Lookback Lens</td><td>73.81</td><td>75.95</td><td>69.61</td><td>69.68</td><td>71.46</td><td>72.26</td><td>74.82</td><td>75.00</td><td>72.43</td><td>73.22</td></tr>
+        <tr class="laab-row"><td>&nbsp;&nbsp;<em>+LaaB</em></td><td class="bold">74.46</td><td class="bold">77.02</td><td class="bold underline">71.24</td><td class="bold underline">72.10</td><td class="bold">71.67</td><td class="bold">73.01</td><td>74.32</td><td class="bold">75.11</td><td class="bold">72.92</td><td class="bold">74.31</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== FINDINGS ==================== -->
+<section>
+  <h2>Key Findings</h2>
+  <div class="finding">
+    <strong>1) Consistent improvement across diverse intrinsic patterns and LLM families.</strong> LaaB enhances detection when applied to hidden states (SAPLMA), logits (Logits Lens), and attention patterns (Lookback Lens), across model scales from 7B to 70B and architectures including LLaMA, Qwen, and Mistral.
+  </div>
+  <div class="finding">
+    <strong>2) Hidden-state-based SAPLMA benefits most from LaaB.</strong> Denser hidden-state representations carry more informative factuality signals, yielding the best results under LaaB enhancement in the majority of settings.
+  </div>
+  <div class="finding">
+    <strong>3) Intrinsic patterns outperform self-judgments and sampling-based methods.</strong> Detectors leveraging internal model representations encode richer factuality signals than discrete token-level outputs, and LaaB's mutual learning provides an effective mechanism for exploiting them.
+  </div>
+</section>
+
+<!-- ==================== ANALYSIS ==================== -->
+<section>
+  <h2>Further Analysis</h2>
+  <div class="analysis-grid">
+    <div class="fig-wrap">
+      <img src="static/sangji.png" alt="Sankey Diagram">
+      <p class="fig-caption">Prediction correctness transitions before and after applying LaaB. A substantial portion of previously wrong predictions are corrected.</p>
+    </div>
+    <div class="fig-wrap">
+      <img src="static/length_analysis.png" alt="Length Analysis">
+      <p class="fig-caption">LaaB brings greater accuracy improvement for longer responses, suggesting self-judgment compresses factuality into a single token, mitigating sparsity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONCLUSION ==================== -->
+<section>
+  <h2>Conclusion</h2>
+  <p style="font-size:15px">
+    We introduced <strong>LaaB</strong> (Logical Consistency-as-a-Bridge), a framework that bridges micro-level intrinsic neural patterns and macro-level symbolic self-judgments for LLM hallucination detection. By introducing a "meta-judgment" process and enforcing the inherent logical constraint via mutual learning, LaaB improves hallucination detection for most base models <strong>without significant additional inference cost</strong> — only D<sub>r</sub> is deployed at test time.
+  </p>
+  <p style="font-size:15px;margin-top:12px">
+    <strong>Future Work:</strong> (1) Extending LaaB for long-article hallucination detection; (2) Multi-modal scenarios; (3) Unified framework integrating LaaB with fact-checking pipelines.
+  </p>
+</section>
+
+<!-- ==================== CITATION ==================== -->
+<section>
+  <h2>Citation</h2>
+  <pre style="background:#f1f5f9;padding:16px;border-radius:8px;font-size:13px;overflow-x:auto;line-height:1.5">@inproceedings{mi2026laab,
+  title={Logical Consistency as a Bridge: Improving LLM Hallucination
+         Detection via Label Constraint Modeling between Responses
+         and Self-Judgments},
+  author={Mi, Hao and Sheng, Qiang and Wang, Shaofei and Hu, Beizhe
+          and Sun, Yifan and Wang, Zhengjia and Zeng, Hengqi
+          and Li, Yang and Wang, Danding and Cao, Juan},
+  booktitle={Proceedings of the 64th Annual Meeting of the
+             Association for Computational Linguistics (ACL)},
+  year={2026}
+}</pre>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    LaaB &copy; 2026 &nbsp;·&nbsp; Institute of Computing Technology, Chinese Academy of Sciences
+  </div>
+</footer>
+
+</body>
+</html>
