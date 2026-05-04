@@ -83,7 +83,7 @@ img {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 6px 8px;
+    gap: 12px 28px;
     margin-bottom: 4px
 }
 
@@ -97,14 +97,6 @@ img {
 
 .author-row a:hover {
     color: #0284c7
-}
-
-.author-sep::after {
-    content: ","
-}
-
-.author-sep:last-child::after {
-    content: ""
 }
 
 /* Affiliation */
