@@ -5,9 +5,7 @@
   <title>Hallucination Reading List - Hao Mi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- marked.js for Markdown parsing -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <!-- GitHub Markdown CSS for elegant styling -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.0/github-markdown.min.css">
   <style>
     body {
@@ -19,7 +17,7 @@
       height: 100vh;
       overflow: hidden;
     }
-    
+
     /* Sidebar */
     .sidebar {
       width: 300px;
@@ -75,7 +73,7 @@
       color: #1d4ed8;
       font-weight: 500;
     }
-    
+
     /* Main Content */
     .main-content {
       flex: 1;
@@ -89,7 +87,7 @@
       box-sizing: border-box;
       background-color: transparent;
     }
-    
+
     /* Empty State */
     .empty-state {
       display: flex;
@@ -128,7 +126,7 @@
       margin: 0 auto;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    
+
     /* Mobile responsive */
     @media (max-width: 768px) {
       body {
@@ -175,7 +173,7 @@
   </main>
 
   <script>
-    const files = [
+    var files = [
       "ACL24-Hallu.md",
       "ACL25-Hallu.md",
       "ACL26-Hallu-1.md",
@@ -183,66 +181,57 @@
       "EMNLP24-Hallu.md"
     ];
 
-    const fileListEl = document.getElementById('fileList');
-    const contentArea = document.getElementById('contentArea');
+    var fileListEl = document.getElementById('fileList');
+    var contentArea = document.getElementById('contentArea');
 
-    // Setup marked options for security and styling
-    marked.setOptions({
-      gfm: true,
-      breaks: true,
-    });
+    var fileIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>';
 
     // Render file list
-    files.forEach(file => {
-      const div = document.createElement('div');
+    files.forEach(function(file) {
+      var div = document.createElement('div');
       div.className = 'file-item';
-      div.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-        ${file.replace('.md', '')}
-      `;
-      div.onclick = () => loadFile(file, div);
+      div.innerHTML = fileIcon + ' ' + file.replace('.md', '');
+      div.setAttribute('data-file', file);
+      div.onclick = function() { loadFile(file, div); };
       fileListEl.appendChild(div);
     });
 
-    async function loadFile(fileName, element) {
+    function loadFile(fileName, element) {
       // Update active state
-      document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
+      var items = document.querySelectorAll('.file-item');
+      for (var i = 0; i < items.length; i++) {
+        items[i].classList.remove('active');
+      }
       element.classList.add('active');
 
       // Show loader
       contentArea.innerHTML = '<div style="display:flex; height:100%; align-items:center; justify-content:center;"><div class="loader"></div></div>';
 
-      try {
-        const response = await fetch(fileName);
-        if (!response.ok) throw new Error('File not found');
-        const text = await response.text();
-        
-        // Render markdown
-        const html = marked.parse(text);
-        contentArea.innerHTML = \`<div class="markdown-body">\${html}</div>\`;
-        
-        // Update URL hash for sharing
-        window.location.hash = fileName;
-        
-        // Scroll to top
-        document.querySelector('.main-content').scrollTop = 0;
-      } catch (error) {
-        contentArea.innerHTML = \`
-          <div class="empty-state" style="color: #ef4444;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <h2>Error loading file</h2>
-            <p>Could not load \${fileName}. It might have been moved or deleted.</p>
-          </div>
-        \`;
-      }
+      fetch(fileName)
+        .then(function(response) {
+          if (!response.ok) throw new Error('File not found');
+          return response.text();
+        })
+        .then(function(text) {
+          var html = marked.parse(text);
+          contentArea.innerHTML = '<div class="markdown-body">' + html + '</div>';
+          window.location.hash = fileName;
+          document.querySelector('.main-content').scrollTop = 0;
+        })
+        .catch(function(error) {
+          contentArea.innerHTML = '<div class="empty-state" style="color: #ef4444;">' +
+            '<h2>Error loading file</h2>' +
+            '<p>Could not load ' + fileName + '. It might have been moved or deleted.</p>' +
+            '</div>';
+        });
     }
 
     // Handle initial load from hash
-    window.addEventListener('DOMContentLoaded', () => {
-      const hash = window.location.hash.slice(1);
-      if (hash && files.includes(hash)) {
-        const items = document.querySelectorAll('.file-item');
-        const index = files.indexOf(hash);
+    window.addEventListener('DOMContentLoaded', function() {
+      var hash = window.location.hash.slice(1);
+      if (hash && files.indexOf(hash) !== -1) {
+        var items = document.querySelectorAll('.file-item');
+        var index = files.indexOf(hash);
         if (items[index]) {
           loadFile(hash, items[index]);
         }
