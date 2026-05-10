@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hallucination Reading List - Hao Mi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- marked.js for Markdown parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- GitHub Markdown CSS for elegant styling -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.0/github-markdown.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #f9fafb;
+      color: #111827;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      width: 300px;
+      background: #ffffff;
+      border-right: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+    .sidebar-header {
+      padding: 24px 20px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .sidebar-header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      color: #1f2937;
+    }
+    .sidebar-header a.back-link {
+      font-size: 0.875rem;
+      color: #6b7280;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .sidebar-header a.back-link:hover {
+      color: #3b82f6;
+    }
+    .file-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 0;
+    }
+    .file-item {
+      padding: 12px 20px;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+      color: #4b5563;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .file-item:hover {
+      background-color: #f3f4f6;
+    }
+    .file-item.active {
+      background-color: #eff6ff;
+      border-left-color: #3b82f6;
+      color: #1d4ed8;
+      font-weight: 500;
+    }
+    
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 40px;
+      background-color: #ffffff;
+    }
+    .markdown-body {
+      max-width: 800px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      background-color: transparent;
+    }
+    
+    /* Empty State */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #6b7280;
+      text-align: center;
+    }
+    .empty-state svg {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 16px;
+      color: #9ca3af;
+    }
+    .empty-state h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      color: #374151;
+    }
+    .empty-state p {
+      max-width: 400px;
+      line-height: 1.5;
+    }
+
+    /* Loading Spinner */
+    .loader {
+      border: 3px solid #f3f4f6;
+      border-top: 3px solid #3b82f6;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        max-height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .main-content {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>Hallucination Reading List</h1>
+      <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        Back to Homepage
+      </a>
+    </div>
+    <div class="file-list" id="fileList">
+      <!-- Files will be injected here -->
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div id="contentArea">
+      <div class="empty-state">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <h2>Select a paper to read</h2>
+        <p>Choose a markdown file from the sidebar to view the reading notes and materials.</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const files = [
+      "ACL24-Hallu.md",
+      "ACL25-Hallu.md",
+      "ACL26-Hallu-1.md",
+      "ACL26-Hallu-2.md",
+      "EMNLP24-Hallu.md"
+    ];
+
+    const fileListEl = document.getElementById('fileList');
+    const contentArea = document.getElementById('contentArea');
+
+    // Setup marked options for security and styling
+    marked.setOptions({
+      gfm: true,
+      breaks: true,
+    });
+
+    // Render file list
+    files.forEach(file => {
+      const div = document.createElement('div');
+      div.className = 'file-item';
+      div.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        ${file.replace('.md', '')}
+      `;
+      div.onclick = () => loadFile(file, div);
+      fileListEl.appendChild(div);
+    });
+
+    async function loadFile(fileName, element) {
+      // Update active state
+      document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+
+      // Show loader
+      contentArea.innerHTML = '<div style="display:flex; height:100%; align-items:center; justify-content:center;"><div class="loader"></div></div>';
+
+      try {
+        const response = await fetch(fileName);
+        if (!response.ok) throw new Error('File not found');
+        const text = await response.text();
+        
+        // Render markdown
+        const html = marked.parse(text);
+        contentArea.innerHTML = \`<div class="markdown-body">\${html}</div>\`;
+        
+        // Update URL hash for sharing
+        window.location.hash = fileName;
+        
+        // Scroll to top
+        document.querySelector('.main-content').scrollTop = 0;
+      } catch (error) {
+        contentArea.innerHTML = \`
+          <div class="empty-state" style="color: #ef4444;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <h2>Error loading file</h2>
+            <p>Could not load \${fileName}. It might have been moved or deleted.</p>
+          </div>
+        \`;
+      }
+    }
+
+    // Handle initial load from hash
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.slice(1);
+      if (hash && files.includes(hash)) {
+        const items = document.querySelectorAll('.file-item');
+        const index = files.indexOf(hash);
+        if (items[index]) {
+          loadFile(hash, items[index]);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
