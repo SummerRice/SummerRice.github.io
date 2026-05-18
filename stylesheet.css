@@ -129,6 +129,7 @@ h2 {
   font-weight: 700;
   color: var(--text-color);
 }
+
 /* ===== Underline ===== */
 .underline {
   text-decoration: underline;
@@ -143,15 +144,15 @@ h2 {
 /* ===== Conference Tag Badge ===== */
 span.tag {
   color: #FFFFFF;
-  /* Liquid glass background: deep navy with partial transparency */
-  background: linear-gradient(135deg, rgba(43, 76, 126, 0.85) 0%, rgba(43, 76, 126, 0.6) 100%);
-  /* Frosted glass blur */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  /* Subtle drop shadow and inner crystal highlight */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1), 
-              inset 0 1px 1px rgba(255, 255, 255, 0.5), 
-              inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+  /* Sharper liquid glass: original navy blue with high opacity */
+  background: linear-gradient(135deg, rgba(31, 42, 97, 0.95) 0%, rgba(31, 42, 97, 0.75) 100%);
+  /* Reduced blur to remove foggy feeling */
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  /* Weaker white highlight to make it look clean and crisp */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   padding: 1px 6px 2px 6px;
   border-radius: 5px;
   font-size: 0.8rem;
